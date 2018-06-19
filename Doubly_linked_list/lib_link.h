@@ -35,15 +35,35 @@
 # define PTHREAD_SAFE_UNLOCK(LOCK)   pthread_mutex_unlock(LOCK)
 #endif
 
-#ifdef WINDOWS
+#ifdef WINDOWSi
 
 #endif
+// 获得结构体(TYPE)的变量成员(MEMBER)在此结构体中的偏移量。
+#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
+// 根据"结构体(type)变量"中的"域成员变量(member)的指针(ptr)"来获取指向整个结构体变量的指针
+#define container_of(ptr, type, member) ({          \
+const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+ (type *)( (char *)__mptr - offsetof(type,member) );})
 
-
-# define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 typedef struct _link_head
 {
 	struct _link_head * next,*prev;
 }link_head,*link_head_p;
+
+
+int link_init(link_head * list, PTHREAD_PLATFORM_LOCK * mutex_lock);
+
+void link_add_first(link_head * new,link_head * head);
+
+void link_add_tail(link_head* new,link_head *head);
+
+void list_del(link_head * entry_own);
+
+int list_is_empty(link_head * head);
+
+#define list_for_each(pos,head)\
+	for (pos = (head)->next; pos != (head); pos = pos->next)
+#define list_entry(ptr, type, member) \
+     container_of(ptr, type, member)
 # endif 
 

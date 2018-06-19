@@ -8,12 +8,12 @@ int link_init(link_head * list, PTHREAD_PLATFORM_LOCK * mutex_lock)
 {
 	list->next=list;
 	list->prev=list;
-	if(!global_mutex_lock)
+	if(!mutex_lock)
 	{
 		show_info("lib error ,mutex_lock is NULL!\n");
 		return -1;
 	}
-    global_mutex_lock=mutex_lock;
+	global_mutex_lock=mutex_lock;
 
 }
 
@@ -56,21 +56,33 @@ void link_add_tail(link_head* new,link_head *head)
 
 
 
-static void __list_del (link_head *prev,link_head*next)
+static void __list_del (link_head*next,link_head*prev)
 {
 
-
+	next->prev=prev;
+	prev->next=next;
 
 }
 
-void list_del()
+/*
+ * This delete is delete self
+*/
+
+void list_del(link_head * entry_own)
 {
  
 	PTHREAD_SAFE_LOCK(global_mutex_lock); 
 
-	void __list_del()
+	__list_del(entry_own->next,entry_own->prev);
 
 	PTHREAD_SAFE_UNLOCK(global_mutex_lock); 
 }
 
+
+int list_is_empty(link_head * head)
+{
+
+	return head->next==head;
+
+}
 

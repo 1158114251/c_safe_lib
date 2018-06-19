@@ -17,7 +17,7 @@
  *
  * AUTHOR: ZHANGFEIONLINE
  * 
-*/
+ */
 
 # ifndef __LIB_LINK
 # define __LIB_LINK
@@ -42,8 +42,8 @@
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 // 根据"结构体(type)变量"中的"域成员变量(member)的指针(ptr)"来获取指向整个结构体变量的指针
 #define container_of(ptr, type, member) ({          \
-const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
- (type *)( (char *)__mptr - offsetof(type,member) );})
+		const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+		(type *)( (char *)__mptr - offsetof(type,member) );})
 
 typedef struct _link_head
 {
@@ -64,6 +64,6 @@ int list_is_empty(link_head * head);
 #define list_for_each(pos,head)\
 	for (pos = (head)->next; pos != (head); pos = pos->next)
 #define list_entry(ptr, type, member) \
-     container_of(ptr, type, member)
+	container_of(ptr, type, member)
 # endif 
 

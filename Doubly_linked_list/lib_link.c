@@ -14,6 +14,7 @@ int link_init(link_head * list, PTHREAD_PLATFORM_LOCK * mutex_lock)
 		return -1;
 	}
 	global_mutex_lock=mutex_lock;
+	return 0;
 
 }
 

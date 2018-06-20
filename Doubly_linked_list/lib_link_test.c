@@ -1,7 +1,6 @@
 /*
  * test
- *
- */
+*/
 #include "lib_error.h"
 #include "lib_link.h"
 #include <stdio.h>
@@ -18,7 +17,7 @@ pthread_mutex_t  test_mutex;
 int main(int argc, const char *argv[])
 {
 
-	size_t i =0;
+	size_t i =0,lib_ret;
 
 	struct _test test, *new ,*con_test_p;
 	struct _link_head *pos;
@@ -26,9 +25,9 @@ int main(int argc, const char *argv[])
 	pthread_mutex_init(&test_mutex, NULL);  
 
 	if (link_init(&test.ll,&test_mutex)<0)
-
+           {
 		exit(-1);
-
+           }
 	for (i=0;i<20;i++)
 	{
 		new=(struct _test *)malloc(sizeof(struct _test));

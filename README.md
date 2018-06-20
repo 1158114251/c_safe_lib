@@ -1,10 +1,29 @@
 # c_safe_lib
 
-c线程安全库,这个项目的目的是创造一套可以工程使用的c数据结构库
+c线程安全库,这个项目的目的是创造一套可以工程使用的c数据结构库，在实际工程中一套优秀高效的数据结构库是必不可少的。
 主要解决俩个方面：
 
 - 1.线程安全 
 - 2.跨平台 linux 、windows
 
 
+
 1.双向循环链表
+
+
+
+注意：
+
+ 这个库支持linux和windows，但是windows目前没有时间测试，现在主要是linux平台。为了保证线程安全库中使用了互斥锁，这可能会影响效率，但已经尽可能减小锁粒度。
+
+Note:
+
+This library supports linux and windows, but windows does not have time to test. Currently, it is mainly linux. 
+Some mutexes are used in the library. This may affect efficiency, but for the sake of thread safety, 
+the granularity of the lock has been reduced as much as possible.
+
+
+
+
+
+ 

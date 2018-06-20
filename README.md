@@ -1,4 +1,4 @@
-# c_safe_lib  ![start this repo](https://img.shields.io/github/stars/1158114251/c_safe_lib.svg)
+# c_safe_lib  ![start this repo](https://img.shields.io/github/stars/1158114251/c_safe_lib.svg) ![license](https://img.shields.io/github/license/1158114251/c_safe_lib.svg)
 
 c线程安全库,这个项目的目的是创造一套可以工程使用的c数据结构库，在实际工程中一套优秀高效的数据结构库是必不可少的。
 主要解决俩个方面：

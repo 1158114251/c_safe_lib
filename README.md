@@ -10,11 +10,9 @@ c线程安全库,这个项目的目的是创造一套可以工程使用的c数�
 ### 实现原理
 
 功能 | 状态 | 实现原理
----|---|---|
+---|---|---
 list|基本实现 |双向循环链表
-
 rfifo|基本实现|环形队列
-
 queue|基本实现|普通的队列
 
 
@@ -32,7 +30,7 @@ the granularity of the lock has been reduced as much as possible.
 
 
 
-### 联系我：
+## 联系我：
  
 若你遇到问题、有了更好的建议或者想要一些新功能，都可以直接在GitHub上提交Issues
 

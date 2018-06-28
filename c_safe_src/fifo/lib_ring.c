@@ -39,14 +39,12 @@ void link_add_first(link_head * new,link_head * head)
 
 	__link_add(new,head->next,head);
 
-
 }
 
 void link_add_tail(link_head* new,link_head *head)
 {
 
 	__link_add(new,head,head->prev);
-
 
 }
 

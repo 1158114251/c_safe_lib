@@ -1,7 +1,20 @@
 #include "lib_link.h"
 #include "lib_error.h"
 
-static unsigned int kfifo_unused(struct __rfifo *fifo)
+/*
+     =out======used=======in=
+     used = in  - out 
+     unused= all - used
+*/
+
+
+static unsigned int rfifo_unused(struct __rfifo *fifo)
 {
-		return (fifo->mask + 1) - (fifo->in - fifo->out);
+	__sync_synchronize();
+	return (fifo->mask + 1) - (fifo->in - fifo->out);
 }
+
+
+
+
+

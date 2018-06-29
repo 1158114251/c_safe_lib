@@ -1,7 +1,4 @@
 #include "lib_link.h"
-#include "lib_error.h"
-
-
 static PTHREAD_PLATFORM_LOCK * global_mutex_lock;
 
 int link_init(link_head * list, PTHREAD_PLATFORM_LOCK * mutex_lock)

@@ -1,8 +1,8 @@
 /*
  * test
 */
-#include "lib_link.h"
 #include "lib_error.h"
+#include "lib_link.h"
 #include <stdio.h>
 
 struct _test
@@ -17,7 +17,7 @@ pthread_mutex_t  test_mutex;
 int main(int argc, const char *argv[])
 {
 
-	size_t i =0;
+	size_t i =0,lib_ret;
 
 	struct _test test, *new ,*con_test_p;
 	struct _link_head *pos;

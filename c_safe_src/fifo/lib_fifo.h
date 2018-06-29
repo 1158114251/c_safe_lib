@@ -19,35 +19,29 @@
  * 
  */
 
-# ifndef __LIB_LINK
-# define __LIB_LINK
+# ifndef __LIB_RFIFO
+# define __LIB_RFIFO
 # include "lib_error.h"
 # include "lib_share.h"
 
-#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
-#define container_of(ptr, type, member) ({          \
-		const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
-		(type *)( (char *)__mptr - offsetof(type,member) );})
+/*
+   Pecial attention, the lock here is only used when the thread is greater than or equal to 2 or more,
+   if only a get thread, a put thread, do not need to lock, the parameters can be passed NULL.
+ 
+ */
 
-typedef struct _link_head
+struct _fifo
 {
-	struct _link_head * next,*prev;
-}link_head,*link_head_p;
+	char * buffer;
+	unsigned int size;
+	unsigned int in;
+	unsigned int out;
+	unsigned int pth_flag;
+    PTHREAD_PLATFORM_LOCK put_lock;
+    PTHREAD_PLATFORM_LOCK get_lock;
+        
+};
 
 
-int link_init(link_head * list, PTHREAD_PLATFORM_LOCK * mutex_lock);
-
-void link_add_first(link_head * new,link_head * head);
-
-void link_add_tail(link_head* new,link_head *head);
-
-void list_del(link_head * entry_own);
-
-int list_is_empty(link_head * head);
-
-#define list_for_each(pos,head)\
-	for (pos = (head)->next; pos != (head); pos = pos->next)
-#define list_entry(ptr, type, member) \
-	container_of(ptr, type, member)
 # endif 
 

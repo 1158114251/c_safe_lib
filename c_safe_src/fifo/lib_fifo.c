@@ -100,6 +100,9 @@ static unsigned int _fifo_put(struct _fifo *fifo, char *buffer, unsigned int siz
 
 	memcpy(fifo->buffer, buffer + len, size - len);
 
+	/*
+	   Memory barrier ,need gcc version >=4.6
+	*/
 	__sync_synchronize();
 
 	fifo->in += size;

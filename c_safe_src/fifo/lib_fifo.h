@@ -43,5 +43,20 @@ struct _fifo
 };
 
 
+struct _fifo * fifo_init(unsigned int size,unsigned int more_pth_flag);
+
+
+
+void fifo_free(struct _fifo * fifo);
+
+
+
+unsigned int fifo_get(struct _fifo * fifo,char * buffer,unsigned int size);
+
+
+
+
+unsigned int fifo_put(struct _fifo * fifo,char * buffer,unsigned int size);
+
 # endif 
 

@@ -63,12 +63,12 @@ void fifo_free(struct _fifo * fifo)
 }
 
 
-unsigned int _fifo_get(struct _fifo * fifo, char * buffer, unsigned int size)
+static unsigned int _fifo_get(struct _fifo * fifo, char * buffer, unsigned int size)
 {
 
 	unsigned int len;
 
-	assert(!fifo || !buffer);
+	assert(fifo && buffer);
 
 	size= _min(size,fifo->in-fifo->out);
 
@@ -86,11 +86,11 @@ unsigned int _fifo_get(struct _fifo * fifo, char * buffer, unsigned int size)
 
 }
 
-unsigned int _fifo_put(struct _fifo *fifo, char *buffer, unsigned int size)
+static unsigned int _fifo_put(struct _fifo *fifo, char *buffer, unsigned int size)
 {
 	unsigned int  len ;
 
-	assert(!fifo || !buffer);
+	assert(fifo && buffer);
 
 	size = _min(size, fifo->size - fifo->in + fifo->out);
 

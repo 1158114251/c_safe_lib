@@ -126,6 +126,22 @@ unsigned int fifo_get(struct _fifo * fifo,char * buffer,unsigned int size)
 
 
 
+unsigned int fifo_put(struct _fifo * fifo,char * buffer,unsigned int size)
+{
+
+	unsigned int ret_value;
+
+	if(fifo->pth_flag)
+		PTHREAD_SAFE_LOCK(&fifo->put_lock);    
+
+	ret_value= _fifo_put(fifo, buffer,size);
+
+	if(fifo->pth_flag)
+		PTHREAD_SAFE_UNLOCK(&fifo->put_lock);   
+
+	return ret_value;
+
+}
 
 
 

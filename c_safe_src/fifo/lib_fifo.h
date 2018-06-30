@@ -39,7 +39,6 @@ struct _fifo
 	unsigned int pth_flag;
     PTHREAD_PLATFORM_LOCK put_lock;
     PTHREAD_PLATFORM_LOCK get_lock;
-
         
 };
 

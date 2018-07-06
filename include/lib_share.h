@@ -25,6 +25,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <assert.h>
+# include <atomic>
 /*
  * This library supports linux and windows, but windows does not have time to test. Currently, it is mainly linux. 
  * Some mutexes are used in the library. This may affect efficiency, but for the sake of thread safety, 

@@ -4,13 +4,16 @@ static PTHREAD_PLATFORM_LOCK * global_mutex_lock;
 int link_init(link_head * list, PTHREAD_PLATFORM_LOCK * mutex_lock)
 {
 	list->next=list;
+
 	list->prev=list;
+
 	if(!mutex_lock)
 	{
 		show_info("lib error ,mutex_lock is NULL!\n");
 		return -1;
 	}
 	global_mutex_lock=mutex_lock;
+
 	return 0;
 
 }

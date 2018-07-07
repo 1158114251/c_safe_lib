@@ -1,13 +1,11 @@
 #include "lib_fifo.h"
-
-
 /*
    =out======used=======in=
    used = in  - out 
    unused= all - used
-   */
+ */
 
-unsigned int _min (unsigned int a,unsigned int b)
+static unsigned int __min (unsigned int a,unsigned int b)
 {
 	return a < b ? a : b;
 
@@ -63,22 +61,22 @@ void fifo_free(struct _fifo * fifo)
 }
 
 
-static unsigned int _fifo_get(struct _fifo * fifo, char * buffer, unsigned int size)
+static unsigned int __fifo_get(struct _fifo * fifo, char * buffer, unsigned int size)
 {
 
 	unsigned int len;
 
 	assert(fifo && buffer);
 
-	size= _min(size,fifo->in-fifo->out);
+	size= __min(size,fifo->in-fifo->out);
 
-	len = _min(size, fifo->size - (fifo->out & (fifo->size - 1)));
+	len = __min(size, fifo->size - (fifo->out & (fifo->size - 1)));
 
 	memcpy(buffer, fifo->buffer + (fifo->out & (fifo->size - 1)), len);
 
 	memcpy(buffer + len, fifo->buffer, size - len);
 
-	__sync_synchronize();
+	__M_B__(_M_B_ARG_);
 
 	fifo->out += size;
 
@@ -86,15 +84,15 @@ static unsigned int _fifo_get(struct _fifo * fifo, char * buffer, unsigned int s
 
 }
 
-static unsigned int _fifo_put(struct _fifo *fifo, char *buffer, unsigned int size)
+static unsigned int __fifo_put(struct _fifo *fifo, char *buffer, unsigned int size)
 {
 	unsigned int  len ;
 
 	assert(fifo && buffer);
 
-	size = _min(size, fifo->size - fifo->in + fifo->out);
+	size = __min(size, fifo->size - fifo->in + fifo->out);
 
-	len = _min(size, fifo->size - (fifo->in & (fifo->size - 1)));
+	len = __min(size, fifo->size - (fifo->in & (fifo->size - 1)));
 
 	memcpy(fifo->buffer + (fifo->in & (fifo->size - 1)), buffer, len);
 
@@ -103,7 +101,7 @@ static unsigned int _fifo_put(struct _fifo *fifo, char *buffer, unsigned int siz
 	/*
 	   Memory barrier ,need gcc version >=4.6
 	*/
-	__sync_synchronize();
+	__M_B__(_M_B_ARG_);
 
 	fifo->in += size;
 
@@ -118,7 +116,7 @@ unsigned int fifo_get(struct _fifo * fifo,char * buffer,unsigned int size)
 	if(fifo->pth_flag)
 		PTHREAD_SAFE_LOCK(&fifo->get_lock);    
 
-	ret_value= _fifo_get(fifo, buffer,size);
+	ret_value= __fifo_get(fifo, buffer,size);
 
 	if(fifo->pth_flag)
 		PTHREAD_SAFE_UNLOCK(&fifo->get_lock);   
@@ -137,7 +135,7 @@ unsigned int fifo_put(struct _fifo * fifo,char * buffer,unsigned int size)
 	if(fifo->pth_flag)
 		PTHREAD_SAFE_LOCK(&fifo->put_lock);    
 
-	ret_value= _fifo_put(fifo, buffer,size);
+	ret_value= __fifo_put(fifo, buffer,size);
 
 	if(fifo->pth_flag)
 		PTHREAD_SAFE_UNLOCK(&fifo->put_lock);   

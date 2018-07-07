@@ -25,24 +25,32 @@
 # include <stdlib.h>
 # include <string.h>
 # include <assert.h>
-# include <atomic>
 /*
  * This library supports linux and windows, but windows does not have time to test. Currently, it is mainly linux. 
  * Some mutexes are used in the library. This may affect efficiency, but for the sake of thread safety, 
- *  the granularity of the lock has been reduced as much as possible.
+ * the granularity of the lock has been reduced as much as possible.
  */
 
 #ifdef __linux	
+
 # include <pthread.h>
 # define PTHREAD_PLATFORM_LOCK       pthread_mutex_t 
 # define PTHREAD_SAFE_LOCK(LOCK)     pthread_mutex_lock(LOCK)
 # define PTHREAD_SAFE_UNLOCK(LOCK)   pthread_mutex_unlock(LOCK)
+# define _M_B_ARG_
+# define __M_B__(_M_B_ARG_)          __sync_synchronize(_M_B_ARG_)
 
 #else
 
+/*Lock-free programming under windows is a memory barrier that relies on C++*/
+# include <atomic>
+# define _M_B_ARG_                   std::memory_order_acquire
+# define __M_B__(_M_B_ARG_)          std::atomic_thread_fence(_M_B_ARG_)
 
 
 #endif
+
+
 #endif
 
 

@@ -55,7 +55,6 @@ unsigned int fifo_get(struct _fifo * fifo,char * buffer,unsigned int size);
 
 
 
-
 unsigned int fifo_put(struct _fifo * fifo,char * buffer,unsigned int size);
 
 # endif 
